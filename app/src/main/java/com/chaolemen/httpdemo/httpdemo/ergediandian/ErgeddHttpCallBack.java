@@ -13,8 +13,8 @@ public abstract class ErgeddHttpCallBack<T> extends BaseCallBack<T> {
     @Override
     protected T onConvert(String result) {
         T t=null;
-        ergeddResponse = new Gson().fromJson(new Gson().toJson(result), ErgeddResponse.class);
-//        ergeddResponse = new Gson().fromJson(result, ErgeddResponse.class);
+//        ergeddResponse = new Gson().fromJson(new Gson().toJson(result), ErgeddResponse.class);
+        ergeddResponse = new Gson().fromJson(result, ErgeddResponse.class);
 //        ergeddResponse = JsonUtils.jsonToClassList()
         JsonElement data = ergeddResponse.getRecord();
         int errorCode = ergeddResponse.getStatus();
@@ -37,7 +37,7 @@ public abstract class ErgeddHttpCallBack<T> extends BaseCallBack<T> {
     @Override
     public boolean isCodeSuccess() {
         if (ergeddResponse != null) {
-            return ergeddResponse.getStatus() == 0;
+            return ergeddResponse.getStatus() == 200;
         }
         return false;
     }

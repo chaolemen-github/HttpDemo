@@ -17,7 +17,7 @@ public class ShopApplication extends Application {
     public void onCreate() {
         super.onCreate();
         HttpGlobalConfig.getInsance()
-                .setBaseUrl("http://api.t.ergedd.com/")
+                .setBaseUrl("http://api.t.ergedd.com/")//儿歌点点
 //                .setBaseUrl("https://www.wanandroid.com/")
                 .setTimeout(HttpConstant.TIME_OUT)
                 .setShowLog(true)
