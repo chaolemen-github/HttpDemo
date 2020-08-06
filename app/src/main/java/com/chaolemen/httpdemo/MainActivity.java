@@ -1,5 +1,6 @@
 package com.chaolemen.httpdemo;
 
+import android.arch.lifecycle.Lifecycle;
 import android.os.Bundle;
 
 import com.chaolemen.httpdemo.httpdemo.ergediandian.DemoEGGet;
@@ -8,9 +9,13 @@ import com.chaolemen.httpdemo.httpdemo.ergediandian.ErgeddHttpCallBack;
 import com.chaolemen.httpdemo.httpdemo.wanandroid.Demo;
 import com.chaolemen.httpdemo.httpdemo.wanandroid.DemoPost;
 import com.chaolemen.httpdemo.httpdemo.wanandroid.HttpCallBack;
+import com.chaolemen.httpdemo.mvp.presenter.EgPresenter;
+import com.chaolemen.httpdemo.mvp.view.EgView;
 import com.chaolemen.httplibrary.client.HttpClient;
 import com.chaolemen.httplibrary.utils.JsonUtils;
 import com.chaolemen.httplibrary.utils.LogUtils;
+import com.chaolemen.mvplibrary.base.BaseMvpActivity;
+import com.chaolemen.mvplibrary.presenter.BasePresenter;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
@@ -18,15 +23,31 @@ import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 import java.util.HashMap;
 import java.util.List;
 
-public class MainActivity extends RxAppCompatActivity {
+public class MainActivity extends BaseMvpActivity<EgView, EgPresenter> implements EgView {
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-//        initGet();
-//        initPost();
-//        initErgedd();
-        initErgeddGetAlbum();
+    public void onSuccess(DemoEGGet demoEGGet) {
+        LogUtils.e("111"+demoEGGet.toString());
+    }
+
+    @Override
+    public void onFail(String error) {
+        LogUtils.e("111"+error);
+    }
+
+    @Override
+    protected EgPresenter initPresenter() {
+        mPresenter = new EgPresenter();
+        return mPresenter;
+    }
+
+    @Override
+    protected int getLayoutId() {
+        return R.layout.activity_main;
+    }
+
+    @Override
+    protected void initData() {
+        mPresenter.getData();
     }
 
     private void initErgeddGetAlbum() {
@@ -159,8 +180,5 @@ public class MainActivity extends RxAppCompatActivity {
         });
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-    }
+
 }
